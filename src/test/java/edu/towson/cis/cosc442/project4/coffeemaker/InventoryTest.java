@@ -1,3 +1,4 @@
+package edu.towson.cis.cosc442.project4.coffeemaker;
 import org.junit.jupiter.api.Test;
 
 public class InventoryTest {

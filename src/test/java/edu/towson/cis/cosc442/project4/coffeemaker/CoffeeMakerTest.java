@@ -156,11 +156,46 @@ public class CoffeeMakerTest {
 
     @Test
     void testCheckInventory() {
-
+        //arrange
+        myCoffeeMaker.addInventory(2,3,4,5);
+        //act
+        Inventory result = myCoffeeMaker.checkInventory();
+        //assert
+        assertEquals(17,result.getCoffee());
+        assertEquals(18,result.getMilk());
+        assertEquals(19,result.getSugar());
+        assertEquals(20,result.getChocolate());
     }
 
     @Test
-    void testDeleteRecipe() {
+    void testDeleteRecipeValid() {
+        //arrange
+        myCoffeeMaker.addRecipe(myRecipe1);
+        myCoffeeMaker.addRecipe(myRecipe2);
+        myCoffeeMaker.addRecipe(myRecipe3);
+
+        //act
+        boolean result = myCoffeeMaker.deleteRecipe(myRecipe2);
+
+        //assert
+        assertTrue(result);
+        for(Recipe recipe : myCoffeeMaker.getRecipes()) {
+            assertFalse(myRecipe2.equals(recipe));
+        } //checks to make sure no recipe equals recipe2 
+    }
+
+    @Test
+    void testDeleteRecipeInvalidDoesNotExist() {
+        //arrange
+        myCoffeeMaker.addRecipe(myRecipe1);
+        myCoffeeMaker.addRecipe(myRecipe2);
+        myCoffeeMaker.addRecipe(myRecipe3);
+
+        //act
+        boolean result = myCoffeeMaker.deleteRecipe(myRecipe4);
+
+        //assert
+        assertFalse(result);
 
     }
 

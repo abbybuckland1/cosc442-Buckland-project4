@@ -24,18 +24,43 @@ public class CoffeeMakerTest {
 
         myRecipe1 = new Recipe();
         myRecipe1.setName("Black Coffee");
+        myRecipe1.setPrice(3);
+        myRecipe1.setAmtCoffee(2);
+        myRecipe1.setAmtMilk(0);
+        myRecipe1.setAmtSugar(0);
+        myRecipe1.setAmtChocolate(0);
 
         myRecipe2 = new Recipe();
         myRecipe2.setName("Vanilla Latte");
+        myRecipe2.setPrice(5);
+        myRecipe2.setAmtCoffee(2);
+        myRecipe2.setAmtMilk(3);
+        myRecipe2.setAmtSugar(1);
+        myRecipe2.setAmtChocolate(0);
 
         myRecipe3 = new Recipe();
-        myRecipe3.setName("Caramel Latte");
+        myRecipe3.setName("Mocha Latte");
+        myRecipe3.setPrice(5);
+        myRecipe3.setAmtCoffee(2);
+        myRecipe3.setAmtMilk(3);
+        myRecipe3.setAmtSugar(1);
+        myRecipe3.setAmtChocolate(2);
 
         myRecipe4 = new Recipe();
         myRecipe4.setName("Espresso");
+        myRecipe4.setPrice(3);
+        myRecipe4.setAmtCoffee(3);
+        myRecipe4.setAmtMilk(0);
+        myRecipe4.setAmtSugar(0);
+        myRecipe4.setAmtChocolate(0);
 
         myRecipe5 = new Recipe();
         myRecipe5.setName("Decaf");
+        myRecipe5.setPrice(3);
+        myRecipe5.setAmtCoffee(2);
+        myRecipe5.setAmtMilk(0);
+        myRecipe5.setAmtSugar(0);
+        myRecipe5.setAmtChocolate(0);
     }
 
     @AfterEach 
@@ -296,8 +321,65 @@ public class CoffeeMakerTest {
         assertEquals(null, result[3].getName());
     }
 
-    @Test
-    void testMakeCoffee() {
+    @ParameterizedTest
+    @CsvSource({
+        "5, 0",
+        "6, 1",
+        "10, 5"
+    })
+    void testMakeCoffeeValid(int amountPaid, int expectedChange) {
+        //arrange in setup
 
+        //act
+        int result = myCoffeeMaker.makeCoffee(myRecipe3, amountPaid);
+
+        //assert
+        assertEquals(expectedChange, result);
+        assertEquals(13, myCoffeeMaker.checkInventory().getCoffee());
+        assertEquals(12, myCoffeeMaker.checkInventory().getMilk());
+        assertEquals(14, myCoffeeMaker.checkInventory().getSugar());
+        assertEquals(13, myCoffeeMaker.checkInventory().getChocolate());
     }
+
+    @ParameterizedTest
+    @CsvSource({
+        "0, 0",
+        "3, 3",
+        "4, 4"
+    })
+    void testMakeCoffeeInvalidMoney(int amountPaid, int expectedChange) {
+        //arrange in setup
+
+        //act
+        int result = myCoffeeMaker.makeCoffee(myRecipe2, amountPaid);
+
+        //assert
+        assertEquals(expectedChange, result);
+        assertEquals(15, myCoffeeMaker.checkInventory().getCoffee());
+        assertEquals(15, myCoffeeMaker.checkInventory().getMilk());
+        assertEquals(15, myCoffeeMaker.checkInventory().getSugar());
+    }
+
+    @Test
+    void testMakeCoffeeInvalidIngredients() {
+        //arrange
+        myCoffeeMaker.makeCoffee(myRecipe2, 5);
+        myCoffeeMaker.makeCoffee(myRecipe2, 5);
+        myCoffeeMaker.makeCoffee(myRecipe2, 5);
+        myCoffeeMaker.makeCoffee(myRecipe2, 5);
+        myCoffeeMaker.makeCoffee(myRecipe2, 5);
+
+        //act
+        int result = myCoffeeMaker.makeCoffee(myRecipe2, 5);
+//last one rejected so customer should get 5 back
+
+        //assert
+        assertEquals(5, result);
+        assertEquals(5, myCoffeeMaker.checkInventory().getCoffee());
+        assertEquals(0, myCoffeeMaker.checkInventory().getMilk());
+        assertEquals(10, myCoffeeMaker.checkInventory().getSugar());
+        assertEquals(15, myCoffeeMaker.checkInventory().getChocolate());
+    }
+    
+
 }

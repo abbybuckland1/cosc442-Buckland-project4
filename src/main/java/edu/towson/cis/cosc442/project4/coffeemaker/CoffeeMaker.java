@@ -151,7 +151,7 @@ public class CoffeeMaker {
             canMakeCoffee = false;
         }
         if (canMakeCoffee) {
-            inventory.setCoffee(inventory.getCoffee() + r.getAmtCoffee());
+            inventory.setCoffee(inventory.getCoffee() - r.getAmtCoffee()); //fixed fault here from + to -
             inventory.setMilk(inventory.getMilk() - r.getAmtMilk());
             inventory.setSugar(inventory.getSugar() - r.getAmtSugar());
             inventory.setChocolate(inventory.getChocolate() - r.getAmtChocolate());

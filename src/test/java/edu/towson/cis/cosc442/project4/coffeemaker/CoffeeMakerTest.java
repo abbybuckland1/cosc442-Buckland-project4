@@ -223,6 +223,17 @@ public class CoffeeMakerTest {
         assertFalse(result);
     }
 
+    @Test
+    void testDeleteRecipeInvalidNull() {
+        //arrange in setup
+
+        //act
+        boolean result = myCoffeeMaker.deleteRecipe(null);
+
+        //assert
+        assertFalse(result);
+    }
+
     //edit recipe tests
     @Test
     void testEditRecipeValid() {

@@ -12,15 +12,40 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class CoffeeMakerTest {
 
     CoffeeMaker myCoffeeMaker;
+    Recipe myRecipe1;
+    Recipe myRecipe2;
+    Recipe myRecipe3;
+    Recipe myRecipe4;
+    Recipe myRecipe5;
 
     @BeforeEach 
     void setUp(){
         myCoffeeMaker = new CoffeeMaker();
+
+        myRecipe1 = new Recipe();
+        myRecipe1.setName("Black Coffee");
+
+        myRecipe2 = new Recipe();
+        myRecipe2.setName("Vanilla Latte");
+
+        myRecipe3 = new Recipe();
+        myRecipe3.setName("Caramel Latte");
+
+        myRecipe4 = new Recipe();
+        myRecipe4.setName("Espresso");
+
+        myRecipe5 = new Recipe();
+        myRecipe5.setName("Decaf");
     }
 
     @AfterEach 
     void tearDown(){
         myCoffeeMaker = null;
+        myRecipe1 = null;
+        myRecipe2 = null;
+        myRecipe3 = null;
+        myRecipe4 = null;
+        myRecipe5 = null;
     }
 
     //add inventory tests
@@ -83,9 +108,50 @@ public class CoffeeMakerTest {
 
         }
 
+    //Add Recipe tests
     @Test
-    void testAddRecipe() {
+    void testAddRecipeValid() {
+        //arrange in setup
 
+        //act
+        boolean result = myCoffeeMaker.addRecipe(myRecipe1);
+        boolean result2 = myCoffeeMaker.addRecipe(myRecipe2);
+
+        //assert
+        assertTrue(result);
+        assertTrue(result2);
+    }
+
+    @Test 
+    void testAddRecipeInvalidFull(){
+        //arrange in setup
+
+        //act
+        boolean result = myCoffeeMaker.addRecipe(myRecipe1);
+        boolean result2 = myCoffeeMaker.addRecipe(myRecipe2);
+        boolean result3 = myCoffeeMaker.addRecipe(myRecipe3);
+        boolean result4 = myCoffeeMaker.addRecipe(myRecipe4);
+        boolean result5 = myCoffeeMaker.addRecipe(myRecipe5);
+
+        //assert
+        assertTrue(result);
+        assertTrue(result2);
+        assertTrue(result3);
+        assertTrue(result4);
+        assertFalse(result5);
+    }
+
+    @Test
+    void testAddRecipeInvalidDuplicateName(){
+        //arrange
+        myRecipe2.setName("Black Coffee");
+        myCoffeeMaker.addRecipe(myRecipe1);
+
+        //act
+        boolean result = myCoffeeMaker.addRecipe(myRecipe2);
+
+        //assert
+        assertFalse(result);
     }
 
     @Test

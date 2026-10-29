@@ -223,6 +223,13 @@ public class InventoryTest {
 
     @Test
     void testToString() {
+        //arrange
+        String expected = "Coffee: 15\n" + "Milk: 15\n" + "Sugar: 15\n" + "Chocolate: 15\n";
 
+        //act
+        String result = myInventory.toString();
+
+        //assert
+        assertEquals(expected, result);
     }
 }

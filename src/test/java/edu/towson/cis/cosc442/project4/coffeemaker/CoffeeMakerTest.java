@@ -267,7 +267,33 @@ public class CoffeeMakerTest {
 
     @Test
     void testGetRecipesValid() {
+        //arrange
+        myCoffeeMaker.addRecipe(myRecipe1);
+        myCoffeeMaker.addRecipe(myRecipe2);
 
+        //act
+        Recipe[] result = myCoffeeMaker.getRecipes();
+
+        //assert
+        assertEquals(4, result.length);
+        assertEquals("Black Coffee", result[0].getName());
+        assertEquals("Vanilla Latte", result[1].getName());
+
+    }
+
+    @Test
+    void testGetRecipesBoundaryEmpty() {
+        //arrange in setup
+
+        //act
+        Recipe[] result = myCoffeeMaker.getRecipes();
+
+        //assert
+        assertEquals(4, result.length);
+        assertEquals(null, result[0].getName());
+        assertEquals(null, result[1].getName());
+        assertEquals(null, result[2].getName());
+        assertEquals(null, result[3].getName());
     }
 
     @Test

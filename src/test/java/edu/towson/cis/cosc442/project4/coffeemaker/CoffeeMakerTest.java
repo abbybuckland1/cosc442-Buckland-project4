@@ -196,17 +196,73 @@ public class CoffeeMakerTest {
 
         //assert
         assertFalse(result);
+    }
 
+    //edit recipe tests
+    @Test
+    void testEditRecipeValid() {
+        //arrange
+        myCoffeeMaker.addRecipe(myRecipe1);
+        //act
+        boolean result = myCoffeeMaker.editRecipe(myRecipe1, myRecipe2);
+        //assert
+        assertTrue(result);
+        assertEquals(null, myCoffeeMaker.getRecipeForName("Black Coffee").getName());
+        assertEquals("Vanilla Latte", myCoffeeMaker.getRecipeForName("Vanilla Latte").getName());
     }
 
     @Test
-    void testEditRecipe() {
+    void testEditRecipeInvalidRecipeDoesNotExist() {
+        //arrange
+        myCoffeeMaker.addRecipe(myRecipe1);
+        //act
+        boolean result = myCoffeeMaker.editRecipe(myRecipe2, myRecipe3);
+        //assert
+        assertFalse(result);
+    }
+
+
+    @Test
+    void testEditRecipeBoundaryFull() {
+        //arrange
+        myCoffeeMaker.addRecipe(myRecipe1);
+        myCoffeeMaker.addRecipe(myRecipe2);
+        myCoffeeMaker.addRecipe(myRecipe3);
+        myCoffeeMaker.addRecipe(myRecipe4);
+
+        //act
+        boolean result = myCoffeeMaker.editRecipe(myRecipe2, myRecipe5);
+
+        //assert
+        assertTrue(result);
+        assertEquals(null, myCoffeeMaker.getRecipeForName("Vanilla Latte").getName());
+        assertEquals("Decaf", myCoffeeMaker.getRecipeForName("Decaf").getName());
 
     }
 
     @Test 
-    void testGetRecipeForName() {
+    void testGetRecipeForNameValid() {
+        //arrange
+        myCoffeeMaker.addRecipe(myRecipe1);
+        myCoffeeMaker.addRecipe(myRecipe2);
 
+        //act
+        Recipe result = myCoffeeMaker.getRecipeForName(myRecipe2.getName());
+
+        //assert
+        assertEquals(myRecipe2.getName(),result.getName());
+    }
+
+    @Test 
+    void testGetRecipeForNameInvalidNameDoesNotExist() {
+        //arrange
+        myCoffeeMaker.addRecipe(myRecipe1);
+
+        //act
+        Recipe result = myCoffeeMaker.getRecipeForName(myRecipe2.getName());
+
+        //assert
+        assertEquals(null, result.getName());
     }
 
     @Test

@@ -266,7 +266,7 @@ public class CoffeeMakerTest {
     }
 
     @Test
-    void testGetRecipes() {
+    void testGetRecipesValid() {
 
     }
 

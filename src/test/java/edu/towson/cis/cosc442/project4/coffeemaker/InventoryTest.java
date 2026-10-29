@@ -10,20 +10,42 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class InventoryTest {
 
     Inventory myInventory;
+    Recipe myRecipe;
 
     @BeforeEach 
     void setUp(){
         myInventory = new Inventory();
+        myRecipe = new Recipe();
     }
 
     @AfterEach 
     void tearDown(){
         myInventory=null;
+        myRecipe=null;
     }
 
-    @Test
-    void testEnoughIngredients() {
+    @ParameterizedTest
+    @CsvSource({
+        "2, 3, 1, 2, true",
+        "16, 3, 1, 2, false",
+        "2, 16, 1, 2, false",
+        "2, 3, 16, 2, false",
+        "2, 3, 1, 16, false",
+        "15, 15, 15, 15, true",
+        "14, 14, 14, 14, true"
+    })
+    void testEnoughIngredients(int coffee, int milk, int sugar, int chocolate, boolean expected) {
+        //arrange
+        myRecipe.setAmtCoffee(coffee);
+        myRecipe.setAmtMilk(milk);
+        myRecipe.setAmtSugar(sugar);
+        myRecipe.setAmtChocolate(chocolate);
 
+        //act
+        boolean result = myInventory.enoughIngredients(myRecipe);
+
+        //assert
+        assertEquals(expected, result);
     }
 
     @Test

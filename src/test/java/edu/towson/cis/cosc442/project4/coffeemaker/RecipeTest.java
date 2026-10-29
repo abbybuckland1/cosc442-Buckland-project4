@@ -1,6 +1,8 @@
 package edu.towson.cis.cosc442.project4.coffeemaker;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,8 +31,45 @@ public class RecipeTest {
     }
 
     @Test
-    void testEquals() {
+    void testEqualsValid() {
+        //arrange
+        Recipe recipe2 = new Recipe();
+        recipe2.setName("Mocha Latte");
 
+        //assert+act
+        assertTrue(myRecipe.equals(recipe2));
+    }
+
+    @Test
+    void testEqualsInvalidDifferentName() {
+        //arrange
+        Recipe recipe2 = new Recipe();
+        recipe2.setName("Black Coffee");
+
+        //assert+act
+        assertFalse(myRecipe.equals(recipe2));
+    }
+
+    @Test
+    void testEqualsOtherNameNull() {
+        //arrange
+        Recipe recipe2 = new Recipe(); //if null
+
+        //assert+act
+        assertFalse(myRecipe.equals(recipe2));
+    }
+
+    @Test
+    void testEqualsMyNameNull() {
+        //arrange
+        Recipe recipe2 = new Recipe();
+        recipe2.setName("Mocha Latte");
+
+        //act
+        myRecipe.setName(null);
+
+        //assert
+        assertFalse(myRecipe.equals(recipe2));
     }
 
     @Test
@@ -265,6 +304,9 @@ public class RecipeTest {
 
     @Test
     void testToString() {
+        //arrange in setup
 
+        //assert+act
+        assertEquals("Mocha Latte", myRecipe.toString());
     }
 }

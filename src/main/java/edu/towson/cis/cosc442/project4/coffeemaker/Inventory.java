@@ -117,7 +117,7 @@ public class Inventory {
      */
     public boolean enoughIngredients(Recipe r) {
         boolean isEnough = true;
-        if (Inventory.coffee < r.getAmtCoffee()) {
+        if (Inventory.coffee <= r.getAmtCoffee()) { //INSERTED BUG
             isEnough = false;
         }
         if (Inventory.milk < r.getAmtMilk()) {

@@ -90,7 +90,7 @@ public class CoffeeMakerTest {
             assertTrue(result);
 
         }
-    
+
     @ParameterizedTest
     @CsvSource({
                         "2, -2, 3, 4",
@@ -108,7 +108,6 @@ public class CoffeeMakerTest {
             assertFalse(result);
 
         }
-
     @ParameterizedTest
     @CsvSource({
                         "-1, 0, 0, 0, false",
@@ -132,6 +131,7 @@ public class CoffeeMakerTest {
             assertEquals(expected, result);
 
         }
+
 
     //Add Recipe tests
     @Test
@@ -331,7 +331,6 @@ public class CoffeeMakerTest {
         assertEquals(null, result[2].getName());
         assertEquals(null, result[3].getName());
     }
-
     @ParameterizedTest
     @CsvSource({
         "5, 0",
@@ -370,6 +369,7 @@ public class CoffeeMakerTest {
         assertEquals(15, myCoffeeMaker.checkInventory().getMilk());
         assertEquals(15, myCoffeeMaker.checkInventory().getSugar());
     }
+
 
     @Test
     void testMakeCoffeeInvalidIngredients() {
